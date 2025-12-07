@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Loc = mongoose.model('Location');
 
-
 const locationsListByDistance = async (req, res) => {
   const lng = parseFloat(req.query.lng);
   const lat = parseFloat(req.query.lat);
@@ -13,7 +12,7 @@ const locationsListByDistance = async (req, res) => {
     distanceField: "distance.calculated",
     key: 'coords',
     spherical: true,
-    maxDistance: 20000,
+    maxDistance: 200000,
   };
   if (!lng || !lat) {
     return res
@@ -50,28 +49,8 @@ const locationsListByDistance = async (req, res) => {
   }
 };
 
-const locationsReadOne = async (req, res) => {
-  try {
-    const location = await Loc.findById(req.params.locationid).exec();
-    if (!location) {
-      return res
-        .status(404)
-        .json({ "message": "location not found" });
-    }
-    return res
-      .status(200)
-      .json(location);
-  } catch (err) {
-    return res
-      .status(400)
-      .json(err);
-  }
-};
-
 const locationsCreate = async (req, res) => {
   try {
-    console.log("BODY 확인:", req.body);
-
     const location = await Loc.create({
       name: req.body.name,
       address: req.body.address,
@@ -79,7 +58,6 @@ const locationsCreate = async (req, res) => {
       coords: {
         type: "Point",
         coordinates: [
-          //126.92184, 37.457619
           parseFloat(req.body.lng),
           parseFloat(req.body.lat)
         ]
@@ -109,6 +87,25 @@ const locationsCreate = async (req, res) => {
       .json(err);
   }
 };
+
+const locationsReadOne = async (req, res) => {
+  try {
+    const location = await Loc.findById(req.params.locationid).exec();
+    if (!location) {
+      return res
+        .status(404)
+        .json({ "message": "location not found" });
+    }
+    return res
+      .status(200)
+      .json(location);
+  } catch (err) {
+    return res
+      .status(404)
+      .json(err);
+  }
+};
+
 
 const locationsUpdateOne = async (req, res) => {
   if (!req.params.locationid) {

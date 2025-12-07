@@ -3,7 +3,7 @@ const readLine = require('readline');
 mongoose.set("strictQuery", false);
 
 const dbPassword = process.env.MONGODB_PASSWORD;
-const dbURI = `mongodb+srv://my_atlas_user:pwd000@clustera.kzreh8j.mongodb.net/Loc8r`;
+const dbURI = `mongodb+srv://my_atlas_user:1234user@clustera.kzreh8j.mongodb.net/Loc8r`;
 
 const connect = () => {
     mongoose.connect(dbURI);
@@ -58,3 +58,4 @@ process.on('SIGTERM', () => {
 connect();
 
 require('./locations');
+require('./users'); //2023810100 이지민
