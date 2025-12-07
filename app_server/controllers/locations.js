@@ -1,4 +1,3 @@
-//선행작업(12강 참고): 커맨드라인에서 $ set NODE_ENV=production 수행
 var request = require('request');
 const apiOptions = {
   server: 'http://localhost:3000'
@@ -161,8 +160,8 @@ const getLocationInfo = (req, res, callback) => {
       if (statusCode === 200) { // API 호출 성공 (상태 코드 200)
         // 응답 데이터에 좌표 정보가 있다면 포맷팅
         data.coords = {
-          lng: body.coords.coordinates[0],
-          lat: body.coords.coordinates[1]
+          lng: body.coords[0],
+          lat: body.coords[1]
         };
         callback(req, res, data); // 성공 시 콜백 함수 호출
       } else {
@@ -236,4 +235,3 @@ module.exports = {
   addReview,
   doAddReview
 };
-
